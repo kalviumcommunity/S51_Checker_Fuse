@@ -12,7 +12,7 @@ Checker Fuse is a project aimed at tracking the progression of a set of students
   3. **Serenity**: Indicates a state of calmness or tranquility.
 
 - **Visual State Representation**: Alongside the name of each student, their current state (Engaged, Dormant, or Serenity) is clearly displayed, providing immediate insight into their status.
-
+ 
 ## Contributors
 
 - [Sudhan](https://github.com/Sudhan112) - Project Lead
