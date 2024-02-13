@@ -1,0 +1,20 @@
+{
+  "name": "S51_Checker_Fuse",
+  "version": "1.0.0",
+  "description": "Checker Fuse is a project aimed at tracking the progression of a set of students listed within an application. It provides real-time check-in and check-out functionalities, contributing to productivity management within educational or work environments.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kalviumcommunity/S51_Checker_Fuse.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kalviumcommunity/S51_Checker_Fuse/issues"
+  },
+  "homepage": "https://github.com/Kalviumcommunity/S51_Checker_Fuse#readme"
+}
