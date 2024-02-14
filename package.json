@@ -4,8 +4,7 @@
   "description": "Checker Fuse is a project aimed at tracking the progression of a set of students listed within an application. It provides real-time check-in and check-out functionalities, contributing to productivity management within educational or work environments.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -17,11 +16,5 @@
   "bugs": {
     "url": "https://github.com/Kalviumcommunity/S51_Checker_Fuse/issues"
   },
-  "homepage": "https://github.com/Kalviumcommunity/S51_Checker_Fuse#readme",
-  "dependencies": {
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.3"
-  }
+  "homepage": "https://github.com/Kalviumcommunity/S51_Checker_Fuse#readme"
 }
