@@ -13,7 +13,7 @@ Checker Fuse is a project aimed at tracking the progression of a set of students
 
 - **Visual State Representation**: Alongside the name of each student, their current state (Engaged, Dormant, or Serenity) is clearly displayed, providing immediate insight into their status.
  
-## Contributors
+## Contributor
 
 - [Sudhan](https://github.com/Sudhan112) - Project Lead
 
