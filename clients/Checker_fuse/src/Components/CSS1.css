@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    font-family: "Jost", sans-serif;
+    font-size: large;
+    width: 80vw;
+    height: 10vh;
+    margin-left: 20%;
+    border: white;
+    background-color: rgb(199, 63, 63);
+    margin-bottom: 1%;
+}
+.div1{
+    margin-bottom: 1%;
+    height: 50px;
+    width: 60vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+}
+.firstandlast{
+    margin-bottom: 1%;
+    height: 350px;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid white;
+    padding: 2% 0 2% 0;
+    color: white;
+}
+.firstandlast p{
+    margin-left: 2%;
+}
