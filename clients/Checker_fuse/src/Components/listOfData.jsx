@@ -40,8 +40,9 @@ const ListOfData = () => {
                                 <h5>{item.Age}</h5>
                             </div>
                             <div className="button">
-                                <button>Loged In</button>
-                                <button>Loged Out</button>
+                                <button>Engaged</button>
+                                <button>Serenity</button>
+                                <button>Dormant</button>
                             </div>
                         </div>
                     </div>
