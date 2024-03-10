@@ -1,5 +1,5 @@
 import React from "react";
-import Data from "../Data.json"
+import Data from "./Data.json"
 import "./CSS1.css"  
 
 export default function CheckerList() {
