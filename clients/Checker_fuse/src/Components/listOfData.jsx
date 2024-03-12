@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import "./Data.css";
 
 const ListOfData = () => {
@@ -28,10 +29,13 @@ const ListOfData = () => {
         <> 
         <div className="alignment"> 
             <h1>Checker Fuse</h1>
+            <div className="addBtn">
+                <Link to={"/add"}><button>Add +</button></Link>
+            </div>
             {error ? (
                 <p>{error}</p>
             ) : (
-                data.map((item, index) => (
+                 data && data.map((item, index) => (
                     <div key={index} className="border">
                         <div className="name">
                             <h3>{item.name}</h3>

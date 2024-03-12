@@ -4,8 +4,10 @@ const { startDatabase, stopDatabase, isConnected } = require('./config/DB.js');
 const router = require("./routes/routes");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require("cors")
 
 
+app.use(cors())
 require('dotenv').config();
 
 const port = process.env.PORT || 3000;
