@@ -4,9 +4,9 @@ const { Schema } = mongoose; // Destructure Schema from mongoose
 
 // Define schema
 const listOfFolksSchema = new Schema({
-    FolkID: { type: String },
-    Lastname: { type: String },
-    DOB: { type: String },
+    // FolkID: { type: String },
+    name: { type: String },
+    // DOB: { type: String },
     Location: { type: String },
     Age: { type: Number },
 });

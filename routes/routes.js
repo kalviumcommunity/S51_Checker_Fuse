@@ -2,9 +2,8 @@ const express = require('express')
 const router = express.Router();
 const FolksList = require('../model/list');
 
-
-
 // GET all folks
+
 router.get('/get', async (req, res) => {
     try {
         const folks = await FolksList.find();
@@ -18,16 +17,15 @@ router.get('/get', async (req, res) => {
 
 //Posting a new folk
 
-router.post('/post', async(req, res) => {
-    try{
-        const {FolkID, Lastname, DOB, Location, Age} = req.body; 
-        console.log("values", FolkID, Lastname)
-        const newFolk = await FolksList.create({FolkID, Lastname, DOB, Location, Age});
+router.post('/post', async (req, res) => {
+    try {
+        const { name, Location, Age } = req.body;
+        console.log("values", name, Location, Age); // Corrected variable name to "name"
+        const newFolk = await FolksList.create({ name, Location, Age });
         res.status(200).json(newFolk);
-    }catch (err){
+    } catch (err) {
         console.error("error from", err);
-        res.status(501).json({"err": err})
-        // res.status(500).json({error: 'Something went wrong in the internal server please try again later'})
+        res.status(500).json({ error: 'Something went wrong in the internal server please try again later' }); // Changed status code to 500
     }
 });
 
@@ -54,6 +52,7 @@ router.patch('/patch/:folkID', async (req, res) => {
 });
 
 //Delete a folk by ID
+
 router.delete('/delete/:folkID', async (req, res) => {
     try{
         const {folkID} = req.params;
@@ -68,7 +67,5 @@ router.delete('/delete/:folkID', async (req, res) => {
         res.status(500).json({ error: 'Something went wrong' });
     }
 })
-
-
 
 module.exports = router; //named export
