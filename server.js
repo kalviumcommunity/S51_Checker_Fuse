@@ -23,6 +23,13 @@ app.get('/ping', (req, res) => {
     res.send("Hello World");
 });
 
+app.get('/getUser/:id', (req, res) => {
+    const id = req.params.id;
+    UserModel.findById({id})
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
+})
+
 // Root route
 app.get('/', (req, res) => {
     const status = isConnected() ? 'connected' : 'Disconnected';

@@ -38,7 +38,7 @@ router.patch('/patch/:folkID', async (req, res) => {
 
         // Find the folks by its ID and update it with the new fields
 
-        const updatedFolk = await FolksList.findOneAndUpdate({ FolkID: folkID}, updatedFields, {new: true});
+        const updatedFolk = await FolksList.findOneAndUpdate({ ID: folkID}, updatedFields, {new: true});
 
         if(!updatedFolk) {
             return res.status(404).json({error: 'Folk Not Found in the server'});

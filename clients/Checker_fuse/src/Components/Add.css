@@ -42,7 +42,9 @@
     font-size: 1em;
     cursor: pointer;
   }
-  
+  .link{
+    text-decoration: none;
+  }
   .buttons:hover {
     background-color: #0056b3;
   }
