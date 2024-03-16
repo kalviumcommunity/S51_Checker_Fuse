@@ -12,6 +12,11 @@ const ListOfData = () => {
         fetchData();
     }, []);
 
+    const okkk = (id) => {
+        console.log(id)
+        nav(`/update/${id}`)
+    }
+    
     const fetchData = async () => {
         try {
             console.log("Fetching data...");
@@ -94,6 +99,7 @@ const ListOfData = () => {
                             <div className="btnUpdateandDelete">
                                 <button onClick={() => okkk(item.ID)} className="updt">Update</button>
                                 <button className="dlt" onClick={() => handleDelete(item.ID)}>Delete</button>
+
                             </div>
                         </div>
                     ))

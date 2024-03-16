@@ -53,19 +53,21 @@ router.patch('/patch/:folkID', async (req, res) => {
 
 //Delete a folk by ID
 
-router.delete('/delete/:_id', async (req, res) => {
-    try{
-        const {folkID} = req.params;
-        const deletedFolk = await FolksList.findOneAndDelete({FolkID: folkID})
+router.delete('/delete/:folkID', async (req, res) => {
+    try {
+        const { folkID } = req.params;
+        const deletedFolk = await FolksList.findOneAndDelete({ ID: folkID });
 
-        if (!deletedFolk){
-            res.status(404).json({error : 'Folk Not Found' });
+        if (!deletedFolk) {
+            return res.status(404).json({ error: 'Folk Not Found' });
         }
+        
         res.status(200).json(deletedFolk);
-    }catch(err){
-        console.error(err)
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ error: 'Something went wrong' });
     }
-})
+});
+
 
 module.exports = router; //named export
