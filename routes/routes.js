@@ -1,6 +1,20 @@
 const express = require('express')
 const router = express.Router();
+const userSchema = require("../Schemas/validateSchema")
 const FolksList = require('../model/list');
+
+const validate = (schema) => (req, res, next) => {
+    const {error} = schema.validate(req.body);
+    if(error){
+        res.status(400).json({error: error.details[0].message })
+    } else{
+        next()
+    }
+
+    router.post('/insert-peer', validate(userSchema), (req, res) => {
+        res.json({message: "Peer inserted successfully!"});
+    })
+}
 
 // GET all folks
 
@@ -35,15 +49,15 @@ router.patch('/patch/:folkID', async (req, res) => {
     try{
         const { folkID } = req.params;  // Extract the ID of the folk to be updated from the URL params
         const updatedFields = req.body;   // Extract the updated fields from the request body
-
+        
         // Find the folks by its ID and update it with the new fields
-
+        
         const updatedFolk = await FolksList.findOneAndUpdate({ ID: folkID}, updatedFields, {new: true});
-
+        
         if(!updatedFolk) {
             return res.status(404).json({error: 'Folk Not Found in the server'});
         }
-
+        
         res.status(200).json(updatedFolk);
     }catch(err){
         console.error(err);
@@ -57,7 +71,7 @@ router.delete('/delete/:folkID', async (req, res) => {
     try {
         const { folkID } = req.params;
         const deletedFolk = await FolksList.findOneAndDelete({ ID: folkID });
-
+        
         if (!deletedFolk) {
             return res.status(404).json({ error: 'Folk Not Found' });
         }
