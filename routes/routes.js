@@ -53,7 +53,7 @@ router.patch('/patch/:folkID', async (req, res) => {
 
 //Delete a folk by ID
 
-router.delete('/delete/:folkID', async (req, res) => {
+router.delete('/delete/:_id', async (req, res) => {
     try{
         const {folkID} = req.params;
         const deletedFolk = await FolksList.findOneAndDelete({FolkID: folkID})
