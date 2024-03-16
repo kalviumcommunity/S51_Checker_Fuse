@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import "../Components/Add.css";
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import Joi from 'joi'; // Import Joi for validation
+
+// Define Joi schema for validation
+const schema = Joi.object({
+    name: Joi.string().min(3).max(30).required().label('Name'),
+    location: Joi.string().allow('').optional().label('Location'),
+    age: Joi.number().integer().min(18).max(120).required().label('Age'),
+    dob: Joi.date().label('Date of Birth') // Assuming DOB is a date field
+});
 
 function Update() {
     const { id } = useParams();
@@ -13,6 +21,7 @@ function Update() {
     const nav = useNavigate();
 
     useEffect(() => {
+        console.log("ID:", id); // Debugging: Check the value of id
         axios.get('http://localhost:3000/get/' + id)
             .then(result => {
                 setName(result.data.name);
@@ -25,6 +34,13 @@ function Update() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Validate data using Joi schema
+        const { error } = schema.validate({ name, location, age, dob });
+        if (error) {
+            console.error(error);
+            return; // Stop submission if validation fails
+        }
 
         axios.patch("http://localhost:3000/patch/" + id, { name, Location: location, Age: age, DOB: dob }) // Included DOB in data object
             .then(response => {
@@ -54,7 +70,7 @@ function Update() {
                     <input type='text' className='DOB' value={dob} onChange={(e) => setDob(e.target.value)} />
                 </div>
 
-                <button type='submit' className='buttons' onClick={handleSubmit}>Update</button>
+                <button type='submit' className='buttons'>Update</button>
             </form>
         </div>
     )

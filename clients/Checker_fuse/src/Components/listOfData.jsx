@@ -1,3 +1,4 @@
+// ListOfData.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,7 +21,7 @@ const ListOfData = () => {
     const fetchData = async () => {
         try {
             console.log("Fetching data...");
-            const response = await axios.get("http://localhost:3000/get");
+            const response = await axios.get("http://localhost:3000/get"); // Update endpoint URL to match your backend
             console.log("Response:", response);
             setData(response.data);
             setError(null);
@@ -32,10 +33,11 @@ const ListOfData = () => {
     
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:3000/delete/${id}`);
+            const response = await axios.delete(`http://localhost:3000/delete/${id}`); // Update endpoint URL to match your backend
             setData(data.filter((item) => item.ID !== id)); 
         } catch (error) {
-            console.error(error);
+            console.error("Error deleting item:", error);
+            setError("Failed to delete the item");
         }
     };
 
@@ -97,9 +99,8 @@ const ListOfData = () => {
                                 </div>
                             </div>
                             <div className="btnUpdateandDelete">
-                                <button onClick={() => okkk(item.ID)} className="updt">Update</button>
+                                <button onClick={() => nav(`/update/${item.ID}`)} className="updt">Update</button>
                                 <button className="dlt" onClick={() => handleDelete(item.ID)}>Delete</button>
-
                             </div>
                         </div>
                     ))
