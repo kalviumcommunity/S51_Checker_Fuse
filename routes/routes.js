@@ -16,6 +16,19 @@ const validate = (schema) => (req, res, next) => {
     })
 }
 
+const validation = (formData) => (req, res, next) => {
+    const {error} = formData.validation(req.body);
+    if(error){
+        res.status(400).json({ error: error.details[0].message })
+    } else {
+        next()
+    }
+
+    router.post('/validation', validation(formData), (req, res) => {
+        res.json({ message: 'Form data is valid!' });
+    })
+}
+
 // GET all folks
 
 router.get('/get', async (req, res) => {

@@ -6,31 +6,34 @@
     border-radius: 5px;
     background-color: #f9f9f9;
   }
-  .container p {
+  body{
+    background-color: #007bff;
+  }
+.container p {
     font-size: 1.2em;
     margin-bottom: 10px;
-  }
-  
-  .form-group {
+}
+
+.form-group {
     margin-bottom: 20px;
-  }
-  
-  label {
+}
+
+label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-  }
-  
-  input {
+}
+
+input {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box; /* This ensures padding is included in the width */
     margin-bottom: 15px;
-  }
-  
-  .buttons {
+}
+
+.buttons {
     display: block;
     width: 100%;
     padding: 10px;
@@ -40,11 +43,12 @@
     color: #fff;
     font-size: 1em;
     cursor: pointer;
-  }
-  .link{
-    text-decoration: none;
-  }
-  .buttons:hover {
+}
+
+.buttons:hover {
     background-color: #0056b3;
-  }
-  
+}
+
+.link {
+    text-decoration: none;
+}
