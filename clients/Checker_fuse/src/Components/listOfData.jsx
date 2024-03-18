@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./Data.css";
+import Cookies from "js-cookie";
 
 const ListOfData = () => {
     const nav = useNavigate();
@@ -59,12 +60,23 @@ const ListOfData = () => {
         setData(newData);
     };
 
+    const handleLogOut = (() => {
+        Cookies.remove('name');
+        Cookies.remove('password');
+
+        nav('/');
+    })
     return (
         <> 
             <div className="alignment"> 
                 <h1>Checker Fuse</h1>
+                <div className="btns">
                 <div className="addBtn">
                     <Link to={"/add"}><button>Add +</button></Link>
+                </div>
+                <div className="logout">
+                    <button onClick={handleLogOut}>Log Out</button>
+                </div>
                 </div>
                 {error ? (
                     <p>{error}</p>
