@@ -107,6 +107,7 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' }); // Use your secret key
         // Set JWT in cookie
         res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiration
+        console.log("token:", token)
         res.send({
             "jwt": token
         });

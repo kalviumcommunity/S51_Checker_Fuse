@@ -44,19 +44,13 @@ function Login() {
                 // Form submission logic here    
                 const expirationDate = new Date();
                 expirationDate.setDate(expirationDate.getDate() + 2);
-
-                Cookies.set("username", formData.username, { expires: expirationDate }); // Changed from userusername to username
-                Cookies.set('password', formData.password, { expires: expirationDate });
-                console.log(formData)
                 const response = await axios.post("http://localhost:3000/login", formData);
                 console.log(response)
-                const { token } = response.data;
-                console.log(response.data);
-                document.cookie = `token=${token}; path=/;`;
+                const { jwt } = response.data;
+                document.cookie = `tokennn=${jwt}; path=/;`;
                 nav(`/listofentities`);
             } catch (error) {
                 console.log(error); // log the error response
-                // Handle errors here
             }
         }
     };
