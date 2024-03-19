@@ -33,6 +33,15 @@ body{
     -webkit-box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
 }
+.btns2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    align-items: center;
+    width: 30vw;
+    margin-top: 2%;
+}
 .button{
     width: 100%;
     display: flex;
@@ -50,6 +59,38 @@ body{
     -webkit-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
 }
+.logout{
+    height: 30px;
+    width: 100px;
+}
+.logout button{
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    border: 2px solid black;
+    background-color: white;
+}
+.logout button:hover{
+    background-color: black;
+    color: white;
+}
+.select{
+    height: 30px;
+    width: 100px;
+    border-radius: 6px;
+    background-color: white;
+}
+.select select{
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    border: 2px solid black;
+    background-color: white;
+}
+.select:hover{
+    background-color: black;
+    color: white;
+}
 .name{
     font-size: larger;
     margin-right: 20%;
@@ -61,8 +102,8 @@ body{
 .addBtn{
     height: 30px;
     width: 100px;
-    margin-top:3%;
-    margin-right: 28%;
+    /* margin-top:3%;
+    margin-right: 28%; */
 }
 .addBtn button{
     width: 100%;

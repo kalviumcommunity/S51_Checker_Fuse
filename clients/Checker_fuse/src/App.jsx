@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ListOfData from "./Components/listOfData"
 import Add from "./Components/add";
 import Update from './Components/Update';
