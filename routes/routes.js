@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router();
 const userSchema = require("../Schemas/validateSchema")
 const FolksList = require('../model/list');
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken"); // Import jsonwebtoken
 
+// Define middleware to validate request body
 const validate = (schema) => (req, res, next) => {
     const {error} = schema.validate(req.body);
     if(error){
@@ -11,40 +13,25 @@ const validate = (schema) => (req, res, next) => {
     } else{
         next()
     }
-
-    router.post('/insert-peer', validate(userSchema), (req, res) => {
-        res.json({message: "Peer inserted successfully!"});
-    })
 }
 
-const validation = (formData) => (req, res, next) => {
-    const {error} = formData.validation(req.body);
-    if(error){
-        res.status(400).json({ error: error.details[0].message })
-    } else {
-        next()
-    }
-
-    router.post('/validation', validation(formData), (req, res) => {
-        res.json({ message: 'Form data is valid!' });
-    })
-}
+// POST route to insert peer with validation middleware
+router.post('/insert-peer', validate(userSchema), (req, res) => {
+    res.json({message: "Peer inserted successfully!"});
+});
 
 // GET all folks
-
 router.get('/get', async (req, res) => {
     try {
         const folks = await FolksList.find();
         res.status(200).json(folks);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.status(500).json({error : 'Something went wrong' })
     }
 });
 
 //Posting a new folk
-
 router.post('/post', async (req, res) => {
     try {
         const { name, Location, Age } = req.body;
@@ -58,7 +45,6 @@ router.post('/post', async (req, res) => {
 });
 
 //Patch/Update a folk by ID
-
 router.patch('/patch/:folkID', async (req, res) => {
     try{
         const { folkID } = req.params;  // Extract the ID of the folk to be updated from the URL params
@@ -73,14 +59,13 @@ router.patch('/patch/:folkID', async (req, res) => {
         }
         
         res.status(200).json(updatedFolk);
-    }catch(err){
+    } catch(err){
         console.error(err);
         res.status(500).json({error: 'Something went wrong'})
     }
 });
 
 //Delete a folk by ID
-
 router.delete('/delete/:folkID', async (req, res) => {
     try {
         const { folkID } = req.params;
@@ -97,7 +82,6 @@ router.delete('/delete/:folkID', async (req, res) => {
     }
 });
 
-
 // Dummy user data for demonstration
 const users = [
     { id: 1, username: 'user1', password: 'password1' },
@@ -105,24 +89,31 @@ const users = [
 ];
 
 // Login endpoint
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
-
-    // Dummy authentication logic
-    const user = users.find(u => u.username === username && u.password === password);
+    console.log(username, password)
+    const user = users.find(u => u.username === username);
     if (!user) {
-        return res.status(401).send('Invalid username or password');
+        return res.status(401).send('Invalid username fuck or password');
     }
-    const isPasswordValid = bcrypt.compare(password, user.password);
-    if(!isPasswordValid) {
-        return res.status(401).json({error: 'Invalid username or password'});
+    try {
+        console.log(user.password)
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: 'Invalid fjjfj username or password' });
+        }
+
+        // Generate JWT
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' }); // Use your secret key
+        // Set JWT in cookie
+        res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiration
+        res.send({
+            "jwt": token
+        });
+    } catch (error) {   
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-
-    // Generate JWT
-    const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
-
-    // Set JWT in cookie
-    res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiration
 });
 
-module.exports = router; //named export
+module.exports = router;

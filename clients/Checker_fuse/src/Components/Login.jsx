@@ -5,34 +5,19 @@ import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from "axios";
 
-
 function Login() {
-    const [storedName, setStoredName] = useState('');
-    const [storedPassword, setStoredPassword] = useState('');
-
-    useEffect(() => {
-        const name = Cookies.get('name');
-        const password = Cookies.get('password');
-        if (name && password) {
-            setStoredName(name);
-            setStoredPassword(password);
-        }
-    }, [])
-    
     const nav = useNavigate();
     const [formData, setFormData] = useState({
-        name: '',
+        username: '',
         location: '',
-        password: '',
-        confirmPassword: ''
+        password: ''
     });
 
     const [formErrors, setFormErrors] = useState({});
 
     const formSchema = Joi.object({
-        name: Joi.string().min(3).max(30).required(),
+        username: Joi.string().min(3).max(30).required(), // Changed from userusername to username
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        confirmPassword: Joi.string().valid(Joi.ref('password')).required().label('Confirm password'),
         location: Joi.string().required()
     });
 
@@ -42,7 +27,7 @@ function Login() {
         if (isLoggedIn) {
             nav('/listofentities'); // Redirect to another page if logged in
         }
-    }, []); // Empty dependency array ensures this effect runs only once on component mount
+    }, [nav]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,26 +45,27 @@ function Login() {
                 const expirationDate = new Date();
                 expirationDate.setDate(expirationDate.getDate() + 2);
 
-                Cookies.set("name",formData.name, {expires: expirationDate});     
-                Cookies.set('password', formData.password, {expires: expirationDate});  
-                
-                const response = await axios.post("http://localhost:3000/login");
-                const {token} = response.data;
+                Cookies.set("username", formData.username, { expires: expirationDate }); // Changed from userusername to username
+                Cookies.set('password', formData.password, { expires: expirationDate });
+                console.log(formData)
+                const response = await axios.post("http://localhost:3000/login", formData);
+                console.log(response)
+                const { token } = response.data;
                 console.log(response.data);
                 document.cookie = `token=${token}; path=/;`;
                 nav(`/listofentities`);
             } catch (error) {
-                console.log(error.response.data); // log the error response
+                console.log(error); // log the error response
                 // Handle errors here
             }
         }
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target; // Changed from username to name
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value // Changed from username to name
         });
 
         if (formErrors[name]) {
@@ -91,29 +77,24 @@ function Login() {
     };
 
     return (
-        <div className="container">
+        <div className="container"> {/* Changed classusername to className */}
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Name:</label>
-                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
-                    {formErrors.name && <span className="error">{formErrors.name}</span>}
+                <div className="form-group"> {/* Changed classusername to className */}
+                    <label>username:</label>
+                    <input type="text" name="username" value={formData.username} onChange={handleInputChange} /> {/* Changed username to name */}
+                    {formErrors.username && <span className="error">{formErrors.username}</span>} {/* Changed classusername to className */}
                 </div>
-                <div className="form-group">
+                <div className="form-group"> {/* Changed classusername to className */}
                     <label>Password:</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleInputChange} />
-                    {formErrors.password && <span className="error">{formErrors.password}</span>}
+                    <input type="password" name="password" value={formData.password} onChange={handleInputChange} /> {/* Changed username to name */}
+                    {formErrors.password && <span className="error">{formErrors.password}</span>} {/* Changed classusername to className */}
                 </div>
-                <div className="form-group">
-                    <label>Confirm Password:</label>
-                    <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} />
-                    {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
-                </div>
-                <div className="form-group">
+                <div className="form-group"> {/* Changed classusername to className */}
                     <label>Location:</label>
-                    <input type="text" name="location" value={formData.location} onChange={handleInputChange} />
-                    {formErrors.location && <span className="error">{formErrors.location}</span>}
+                    <input type="text" name="location" value={formData.location} onChange={handleInputChange} /> {/* Changed username to name */}
+                    {formErrors.location && <span className="error">{formErrors.location}</span>} {/* Changed classusername to className */}
                 </div>
-                <button className="buttons" type="submit">Submit</button>
+                <button className="buttons" type="submit">Submit</button> {/* Changed classusername to className */}
             </form>
         </div>
     );

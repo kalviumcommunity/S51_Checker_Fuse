@@ -1,14 +1,21 @@
-// ListOfData.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./Data.css";
+import Cookies from 'js-cookie'; // Add import statement for Cookies
 
 const ListOfData = () => {
     const nav = useNavigate();
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
-    
+    const [selectedLocation, setSelectedLocation] = useState("ALL");
+
+    const handleLocationChange = (e) => {
+        setSelectedLocation(e.target.value);
+    }
+
+    const filteredLocation = selectedLocation !== "ALL" ? data.filter((locate) => locate.Location === selectedLocation) : data;
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -21,7 +28,7 @@ const ListOfData = () => {
     const fetchData = async () => {
         try {
             console.log("Fetching data...");
-            const response = await axios.get("http://localhost:3000/get"); // Update endpoint URL to match your backend
+            const response = await axios.get("http://localhost:3000/get");
             console.log("Response:", response);
             setData(response.data);
             setError(null);
@@ -33,7 +40,7 @@ const ListOfData = () => {
     
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:3000/delete/${id}`); // Update endpoint URL to match your backend
+            const response = await axios.delete(`http://localhost:3000/delete/${id}`);
             setData(data.filter((item) => item.ID !== id)); 
         } catch (error) {
             console.error("Error deleting item:", error);
@@ -58,18 +65,39 @@ const ListOfData = () => {
         }
         setData(newData);
     };
+    
+    const removeCookies = () => {
+        Cookies.remove('username');
+        Cookies.remove('password');
+        nav('/');
+    };
 
     return (
         <> 
             <div className="alignment"> 
                 <h1>Checker Fuse</h1>
-                <div className="addBtn">
-                    <Link to={"/add"}><button>Add +</button></Link>
+                <div className="btns2">
+                    <div className="addBtn">
+                        <Link to={"/add"}><button>Add +</button></Link>
+                    </div>
+                    <div className="select">        
+                        <select value={selectedLocation} onChange={handleLocationChange} className="optionBar">
+                            <option value= "ALL">
+                                All location
+                            </option>
+                            {Array.from(new Set(data.map((locate) => locate.Location))).map((Location) => (
+                                <option key={Location} value={Location} >{Location}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="logout">
+                        <button onClick={removeCookies}>Log Out</button>
+                    </div>
                 </div>
                 {error ? (
                     <p>{error}</p>
                 ) : (
-                    data && data.map((item, index) => (
+                    filteredLocation.map((item, index) => (
                         <div key={index} className="border">
                             <div className="name">
                                 <h3>{item.name}</h3>
