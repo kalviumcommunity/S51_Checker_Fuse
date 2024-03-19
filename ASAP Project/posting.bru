@@ -5,17 +5,11 @@ meta {
 }
 
 post {
-  url: https://checker-fuse.onrender.com/post
+  url: http://localhost:3000/login
   body: json
   auth: none
 }
 
 body:json {
-  {
-      "FolkID": "YT678",
-      "Name": "Nithya",
-      "DOB": "03-06-2024",
-      "Location": "Chennai",
-      "Age": 18
-  }
+  { "username": "user1", "password": "password1" }
 }

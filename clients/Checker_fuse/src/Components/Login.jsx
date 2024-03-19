@@ -3,6 +3,7 @@ import Joi from "joi";
 import "../Components/login.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import axios from "axios";
 
 
 function Login() {
@@ -43,7 +44,7 @@ function Login() {
         }
     }, []); // Empty dependency array ensures this effect runs only once on component mount
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const { error } = formSchema.validate(formData, { abortEarly: false });
@@ -54,13 +55,23 @@ function Login() {
             });
             setFormErrors(errors);
         } else {
-            // Form submission logic here    
-            const expirationDate = new Date();
-            expirationDate.setDate(expirationDate.getDate() + 2);
+            try {
+                // Form submission logic here    
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 2);
 
-            Cookies.set("name",formData.name, {expires: expirationDate});     
-            Cookies.set('password', formData.password, {expires: expirationDate});  
-        nav(`listofentities`)
+                Cookies.set("name",formData.name, {expires: expirationDate});     
+                Cookies.set('password', formData.password, {expires: expirationDate});  
+                
+                const response = await axios.post("http://localhost:3000/login");
+                const {token} = response.data;
+                console.log(response.data);
+                document.cookie = `token=${token}; path=/;`;
+                nav(`/listofentities`);
+            } catch (error) {
+                console.log(error.response.data); // log the error response
+                // Handle errors here
+            }
         }
     };
 

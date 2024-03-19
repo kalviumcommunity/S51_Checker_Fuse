@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const userSchema = require("../Schemas/validateSchema")
 const FolksList = require('../model/list');
+const bcrypt = require("bcrypt")
 
 const validate = (schema) => (req, res, next) => {
     const {error} = schema.validate(req.body);
@@ -96,5 +97,32 @@ router.delete('/delete/:folkID', async (req, res) => {
     }
 });
 
+
+// Dummy user data for demonstration
+const users = [
+    { id: 1, username: 'user1', password: 'password1' },
+    { id: 2, username: 'user2', password: '$2b$10$3TniR460v2msrt8NwWOpSu2BCROMvUd2MGtU3iI1/Hfv3EvBzlUoe' }
+];
+
+// Login endpoint
+router.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Dummy authentication logic
+    const user = users.find(u => u.username === username && u.password === password);
+    if (!user) {
+        return res.status(401).send('Invalid username or password');
+    }
+    const isPasswordValid = bcrypt.compare(password, user.password);
+    if(!isPasswordValid) {
+        return res.status(401).json({error: 'Invalid username or password'});
+    }
+
+    // Generate JWT
+    const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
+
+    // Set JWT in cookie
+    res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiration
+});
 
 module.exports = router; //named export
