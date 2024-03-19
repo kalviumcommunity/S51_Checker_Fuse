@@ -7,6 +7,7 @@
     "express": "^4.18.2",
     "joi": "^17.12.2",
     "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.0",
     "node": "^21.7.1",
     "react": "^18.2.0",
